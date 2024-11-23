@@ -48,7 +48,7 @@ CREATE TABLE chofer (
 CREATE TABLE corrida (
     corrida_id INT(6) AUTO_INCREMENT PRIMARY KEY NOT NULL,
     precio_corrida DECIMAL(8,2) NOT NULL,
-    estatus ENUM --que es esto?? 
+    estatus ENUM("Disponible", "No disponible") NOT NULL 
 );
 
 CREATE TABLE boleto (
@@ -85,4 +85,74 @@ CREATE TABLE asiento (
     FOREIGN KEY (autobus_id) REFERENCES autobus(autobus_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
+);
+
+CREATE TABLE localidad (
+    localidad_id INT(4) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(25) NOT NULL,
+    clave CHAR(3) NOT NULL,
+    estado VARCHAR(25) NOT NULL 
+);
+
+CREATE TABLE terminal (
+    terminal_id INT(4) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
+    cp INT(5) NOT NULL
+    calle VARCHAR(40) NOT NULL,
+    telefono CHAR(10) NOT NULL,
+    estatus ENUM("Activa", "Inactiva") NOT NULL,
+    localidad_id INT(4) NOT NULL, --llave foranea
+    FOREIGN KEY (localidad_id) REFERENCES localidad(localidad_id)
+);
+
+CREATE TABLE ruta (
+    ruta_id INT(5) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    origen VARCHAR(30) NOT NULL,
+    destino VARCHAR(30) NOT NULL,
+    estatus ENUM("Disponible", "No disponible") NOT NULL,
+    terminal_id INT(4) NOT NULL,
+    FOREIGN KEY (terminal_id) REFERENCES terminal(terminal_id)
+);
+
+CREATE TABLE subruta (
+    subruta_id INT(5) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    origen VARCHAR(30) NOT NULL,
+    destino VARCHAR(30) NOT NULL,
+    distancia INT(4) NOT NULL,
+    tiempo_aprox TIME NOT NULL,
+    estatus ENUM("Disponible", "No disponible") NOT NULL,
+    ruta_id INT(5) NOT NULL,
+    FOREIGN KEY (ruta_id) REFERENCES ruta(ruta_id)
+);
+
+CREATE TABLE amenidad (
+    amenidad_id INT(4) PRIMARY KEY NOT NULL,--duda del tamaño 4
+    nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR NOT NULL
+);
+
+CREATE TABLE marca (
+    marca_id INT(1) PRIMARY KEY NOT NULL,
+    marca VARCHAR(30) NOT NULL,
+    servicio VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE factura (
+    folio_fiscal CHAR(36) PRIMARY KEY NOT NULL,
+    rfc VARCHAR(13) NOT NULL,
+    razon_social VARCHAR(100) NOT NULL,
+    reg_fiscal VARCHAR(100) NOT NULL,
+    domicilio VARCHAR(200) NOT NULL,
+    subtotal INT(5) NOT NULL,
+    impuestos INT(5) not NULL,
+    total INT(5) NOT NULL
+);
+
+CREATE TABLE saldo_max (
+    numero_tarjeta INT(16) PRIMARY KEY NOT NULL,
+    nombre_titular VARCHAR(60) NOT NULL,
+    saldo INT(5) NOT NULL,
+    ultimo_movimiento INT(5) NOT NULL,
+    final_vigencia DATE(10),
+    estatus ENUM("Activa", "Inactiva") NOT NULL--cambio de varchar a enum
 );
