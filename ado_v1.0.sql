@@ -41,8 +41,8 @@ CREATE TABLE chofer (
     vigencia_licencia DATE NOT NULL,
     numero_licencia VARCHAR(20) NOT NULL,
     FOREIGN KEY (rfc) REFERENCES Empleado(rfc)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE corrida (
@@ -58,8 +58,31 @@ CREATE TABLE boleto (
     fecha_hora DATETIME NOT NULL,
     metodo_pago VARCHAR(30) NOT NULL,
     FOREIGN KEY (corrida_id) REFERENCES corrida(corrida_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
-CREATE TABLE 
+CREATE TABLE autobus (
+    autobus_id INT(5) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    matricula CHAR(7) NOT NULL,
+    tipo VARCHAR(15) NOT NULL,
+    marca VARCHAR(15) NOT NULL,
+    modelo VARCHAR(50) NOT NULL,
+    total_asiento INT(2) NOT NULL,
+    num_columna INT(2) NOT NULL,
+    num_fila INT(2) NOT NULL
+);
+
+CREATE TABLE asiento (
+    num_asiento INT(2) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    fila INT(2) NOT NULL,
+    FOREIGN KEY (corrida_id) REFERENCES corrida(corrida_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    FOREIGN KEY (folio) REFERENCES boleto(folio)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    FOREIGN KEY (autobus_id) REFERENCES autobus(autobus_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
