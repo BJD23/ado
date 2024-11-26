@@ -6,11 +6,11 @@ USE ado;
 
 CREATE TABLE cliente(
     cliente_id INT PRIMARY KEY NOT NULL,
-    nombre VARCHAR(20) NOT NULL,
-    paterno VARCHAR(15) NOT NULL,
-    materno VARCHAR(15),
+    nombre VARCHAR(40) NOT NULL,
+    paterno VARCHAR(40) NOT NULL,
+    materno VARCHAR(40),
     telefono VARCHAR(10) NOT NULL,
-    correo VARCHAR(60) NOT NULL,
+    correo VARCHAR(70) NOT NULL,
     contraseña VARCHAR(256) NOT NULL 
 );
 
@@ -29,14 +29,14 @@ CREATE TABLE empleado (
     materno VARCHAR(40),
     nss VARCHAR(11) NOT NULL,
     telefono VARCHAR(10) NOT NULL,
-    calle VARCHAR(30),
-    numero VARCHAR(4),
-    colonia VARCHAR(30),
+    calle VARCHAR(80),
+    numero VARCHAR(5),
+    colonia VARCHAR(80),
     cp VARCHAR(5),
-    ciudad VARCHAR(30),
+    ciudad VARCHAR(80),
     cuenta_bancaria VARCHAR(11) NOT NULL,
     sueldo_diario INT NOT NULL,
-    ocupacion VARCHAR(25) NOT NULL
+    ocupacion VARCHAR(35) NOT NULL
 );
 
 CREATE TABLE chofer (
