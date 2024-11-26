@@ -24,15 +24,16 @@ CREATE TABLE descuento(
 
 CREATE TABLE empleado (
     rfc VARCHAR(13) PRIMARY KEY NOT NULL,
-    nombres VARCHAR(30) NOT NULL,
-    paterno VARCHAR(30) NOT NULL,
-    materno VARCHAR(30),
+    nombres VARCHAR(40) NOT NULL,
+    paterno VARCHAR(40) NOT NULL,
+    materno VARCHAR(40),
     nss VARCHAR(11) NOT NULL,
-    telefono VARCHAR(20) NOT NULL,
+    telefono VARCHAR(10) NOT NULL,
     calle VARCHAR(30),
     numero VARCHAR(4),
     colonia VARCHAR(30),
     cp VARCHAR(5),
+    ciudad VARCHAR(30),
     cuenta_bancaria VARCHAR(11) NOT NULL,
     sueldo_diario INT NOT NULL,
     ocupacion VARCHAR(25) NOT NULL
@@ -41,12 +42,12 @@ CREATE TABLE empleado (
 CREATE TABLE chofer (
     chofer_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     vigencia_licencia DATE NOT NULL,
-    numero_licencia VARCHAR(20) NOT NULL,
+    numero_licencia VARCHAR(9) NOT NULL, --cambio de 20 a 9
     rfc VARCHAR(13) NOT NULL,
     FOREIGN KEY (rfc) REFERENCES empleado(rfc)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
+);-- ultima terminal??
 
 CREATE TABLE corrida (
     corrida_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
