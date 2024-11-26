@@ -43,7 +43,7 @@ CREATE TABLE chofer (
     vigencia_licencia DATE NOT NULL,
     numero_licencia VARCHAR(20) NOT NULL,
     rfc VARCHAR(13) NOT NULL,
-    FOREIGN KEY (rfc) REFERENCES Empleado(rfc)
+    FOREIGN KEY (rfc) REFERENCES empleado(rfc)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
