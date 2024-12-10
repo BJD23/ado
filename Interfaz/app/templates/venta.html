@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de Boletos</title>
+</head>
+<body>
+    <h1>Venta de Boletos</h1>
+    
+    <form method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <br><br>
+        
+        
+        <!-- Origen -->
+        <label for="origen">Origen:</label>
+        <select name="origen" id="origen" required>
+            {% for terminal in terminales %}
+                <option value="{{ terminal[0] }}">{{ terminal[1] }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <!-- Destino -->
+        <label for="destino">Destino:</label>
+        <select name="destino" id="destino" required>
+            {% for terminal in terminales %}
+                <option value="{{ terminal[0] }}">{{ terminal[1] }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
+        <br><br>
+
+        <label for="asiento">Número de Asiento:</label>
+        <input type="text" id="asiento" name="asiento" required>
+        <br><br>
+
+        <button type="submit">Registrar Boleto</button>
+    </form>
+
+    <p>{{ message }}</p>  <!-- Mostrar el mensaje -->
+</body>
+</html>

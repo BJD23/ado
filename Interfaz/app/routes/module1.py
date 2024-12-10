@@ -1,12 +1,16 @@
 from flask import Blueprint, render_template
-from app.db_connection import get_connection
+from app.db_connection import get_connection  # Asegúrate de que esta función esté configurada correctamente
 
-module1 = Blueprint('module1', __name__, template_folder="../templates")
+module1 = Blueprint('module1', __name__)
 
 @module1.route('/module1')
-def index():
+def verificar_conexion():
+    # Intentar conectar a la base de datos
     connection = get_connection()
     if connection:
-        return render_template('module1.html', message="Conexión exitosa a la base de datos.")
+        message = "Conexión exitosa a la base de datos."
+        connection.close()  # Cerrar la conexión después de usarla
     else:
-        return render_template('module1.html', message="Error al conectar a la base de datos.")
+        message = "Error al conectar a la base de datos."
+    
+    return render_template('module1.html', message=message)

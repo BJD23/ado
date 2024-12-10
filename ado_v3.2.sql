@@ -39,59 +39,13 @@ CREATE TABLE empleado (
 CREATE TABLE conductor (
     conductor_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     vigencia_licencia DATE NOT NULL,
-    numero_licencia VARCHAR(9) NOT NULL, --cambio de 20 a 9
+    numero_licencia VARCHAR(9) NOT NULL,
     empleado_id INT NOT NULL,
     FOREIGN KEY (empleado_id) REFERENCES empleado(empleado_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
-CREATE TABLE boleto (
-    folio INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    nombre VARCHAR(50) NOT NULL,
-    estatus ENUM("activo", "abordado", "cancelado") NOT NULL,
-    fecha_hora DATETIME NOT NULL,
-    metodo_pago ENUM("efectivo", "tarjeta", "saldo max") NOT NULL,
-    corrida_id INT NOT NULL,
-    descuento_id INT NOT NULL,
-    asiento_id INT NOT NULL,
-    FOREIGN KEY (corrida_id) REFERENCES corrida(corrida_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (descuento_id) REFERENCES descuento(descuento_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (asiento_id) REFERENCES asiento(asiento_id)
-    	ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE vehiculo (
-    vehiculo_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    matricula CHAR(7) NOT NULL,
-    tipo VARCHAR(15) NOT NULL,
-    marca VARCHAR(15) NOT NULL,
-    modelo VARCHAR(50) NOT NULL,
-    asientos INT NOT NULL,
-    estatus ENUM("en servicio", "en mantenimiento", "inhabilitado") NOT NULL,
-    marca_id INT NOT NULL,
-    FOREIGN KEY(marca_id) REFERENCES marca(marca_id)
-    	ON DELETE CASCADE
-    	ON UPDATE CASCADE
-);
-
-CREATE TABLE asiento (
-    asiento_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    numero INT NOT NULL,
-    corrida_id INT NOT NULL,
-    vehiculo_id INT NOT NULL,
-    FOREIGN KEY (corrida_id) REFERENCES corrida(corrida_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (vehiculo_id) REFERENCES vehiculo(vehiculo_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
 
 CREATE TABLE localidad (
     localidad_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -161,6 +115,54 @@ CREATE TABLE marca (
     marca_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     marca VARCHAR(30) NOT NULL,
     servicio VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE vehiculo (
+    vehiculo_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    matricula CHAR(7) NOT NULL,
+    tipo VARCHAR(15) NOT NULL,
+    marca VARCHAR(15) NOT NULL,
+    modelo VARCHAR(50) NOT NULL,
+    asientos INT NOT NULL,
+    estatus ENUM("en servicio", "en mantenimiento", "inhabilitado") NOT NULL,
+    marca_id INT NOT NULL,
+    FOREIGN KEY(marca_id) REFERENCES marca(marca_id)
+    	ON DELETE CASCADE
+    	ON UPDATE CASCADE
+);
+
+CREATE TABLE asiento (
+    asiento_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    numero INT NOT NULL,
+    corrida_id INT NOT NULL,
+    vehiculo_id INT NOT NULL,
+    FOREIGN KEY (corrida_id) REFERENCES corrida(corrida_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (vehiculo_id) REFERENCES vehiculo(vehiculo_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+CREATE TABLE boleto (
+    folio INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    estatus ENUM("activo", "abordado", "cancelado") NOT NULL,
+    fecha_hora DATETIME NOT NULL,
+    metodo_pago ENUM("efectivo", "tarjeta", "saldo max") NOT NULL,
+    corrida_id INT NOT NULL,
+    descuento_id INT NOT NULL,
+    asiento_id INT NOT NULL,
+    FOREIGN KEY (corrida_id) REFERENCES corrida(corrida_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (descuento_id) REFERENCES descuento(descuento_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (asiento_id) REFERENCES asiento(asiento_id)
+    	ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE factura (
